@@ -1,0 +1,29 @@
+# tree.mtl
+# 
+# okh generic tree, modified
+# From tree_generic_ed.zip at https://sourceforge.net/p/sweethome3d/d-models/261/ 
+# 
+# This file is distributed under Free Art License, see http://artlibre.org/licence/lal/en for more informations
+# and under CC-BY Creative Commons Attribution 3.0 Unported license, see http://creativecommons.org/licenses/by/3.0/
+# at your choice
+#
+newmtl Leaves
+illum 2
+Ka 0.2 0.2 0.2
+Kd 0.12 0.30 0.0
+Ks 0.10 0.10 0.10
+Ns 12.0
+
+newmtl Branches
+illum 2
+Ka 0.2 0.2 0.2
+Kd 0.52 0.45 0.25
+Ks 0.10 0.10 0.10
+Ns 4.0
+
+newmtl Trunk
+illum 2
+Ka 0.2 0.2 0.2
+Kd 0.52 0.45 0.25
+Ks 0.10 0.10 0.10
+Ns 4.0
