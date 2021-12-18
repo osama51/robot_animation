@@ -1,24 +1,13 @@
 # Blender MTL File: 'None'
-# Material Count: 2
+# Material Count: 1
 
-newmtl Leaves
-Ns 30.000009
+newmtl Rock
+Ns 5.000001
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
-Ks 0.066929 0.066929 0.066929
+Ks 0.020000 0.020000 0.020000
 Ke 0.000000 0.000000 0.000000
-Ni 1.450000
+Ni 1.000000
 d 1.000000
 illum 2
-map_Kd bambooTexture.jpg
-
-newmtl Trunk
-Ns 10.000002
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.050000 0.050000 0.050000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd bambooTexture.jpg
+map_Kd E:\\College\\2023\\CG\\tasks\\Task 3\\ours\\robot_animation\\robot_animation\\data\\rock03.jpg
