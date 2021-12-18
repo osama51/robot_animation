@@ -19,7 +19,7 @@
 
 - Textures:
 
-    We added three images as a texture for the ground to constitute different ground types, We can choose among them by using the main menue.  
+    We added three images as texture for the ground to represent different ground types, We can choose one of them by using the main menue.  
 
     The resulting ground types are:
     - Grass Ground.
@@ -40,7 +40,7 @@
 
     - Dancing:
 
-        The robotic body dances in a funy way while it is moving in the garden.   
+        The robotic body dances in a funny way while it is moving in the garden.   
 
     - Moving:
 
@@ -52,12 +52,12 @@
     <img src="samples/shot.PNG" width="300" height="250"/>
 </P>
 
-## Problems we faced
+## Problems Faced
 We faced different problems in the following:
 
  - Animatiom:
 
-    It was difficult to construct an animation by using just numbers to adjust a lot of angels and positions, We overcomed this problem by using try and error technique.
+    It was difficult to construct an animation by using just numbers to adjust a lot of angles and positions, We overcame this problem by using try and error technique.
 
  - Coding:
 
@@ -65,4 +65,4 @@ We faced different problems in the following:
 
 ## Contributions
 
-We taked some code blocks from tutorial 5 materials."# task3-graph-bio" 
+We took some code blocks from tutorial 5 materials.
