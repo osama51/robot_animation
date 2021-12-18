@@ -1,6 +1,4 @@
-﻿  glm.cpp
-  imageloader.cpp
-  Source.cpp
-e:\college\2023\cg\tasks\task 3\ours\robot_animation\robot_animation\source.cpp(46): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
-  Generating Code...
+﻿  Source.cpp
+e:\college\2023\cg\tasks\task 3\ours\robot_animation\robot_animation\source.cpp(45): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+e:\college\2023\cg\tasks\task 3\ours\robot_animation\robot_animation\source.cpp(50): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
   robot_animation.vcxproj -> E:\College\2023\CG\tasks\Task 3\ours\robot_animation\Debug\robot_animation.exe

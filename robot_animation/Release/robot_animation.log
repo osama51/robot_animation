@@ -1,0 +1,9 @@
+﻿  Source.cpp
+e:\college\2023\cg\tasks\task 3\ours\robot_animation\robot_animation\source.cpp(45): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+e:\college\2023\cg\tasks\task 3\ours\robot_animation\robot_animation\source.cpp(50): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+  Generating code
+  9 of 203 functions ( 4.4%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  robot_animation.vcxproj -> E:\College\2023\CG\tasks\Task 3\ours\robot_animation\Release\robot_animation.exe

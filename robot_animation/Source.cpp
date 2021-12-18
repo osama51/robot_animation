@@ -10,14 +10,12 @@
 #define Left -1
 #define PI 3.14
 
-static int shoulder_x[2], shoulder_y[2], shoulder_z[2], hip_x[2], hip_y[2], hip_z[2], knee[2], elbow[2];
-int moving, startx, starty;
-
-static int f = 5;
-float frames[5][3] = { 3,-5,10, 6,-25,100 ,20,-75,150, 6,-25,100 ,3,-5,10 };
-
-const char *image_options[3] = { "images/grass2.bmp" , "images/rockground.bmp", "images/snow.bmp" };
-char i = 0;
+static int shoulder_x[2], shoulder_y[2], shoulder_z[2], hip_x[2], hip_y[2], hip_z[2], knee[2], elbow[2], jump, wside, wfront, hrotate, trock;int moving; int startx; int starty;static int f = 9;static int d = 0;float frames[3][9][12] = { { { 0,-90,5,-5 },{ 4,-85,10,-15 } ,{ 7,-15,60,-30 },	{ 9,-15,60,-30 },{ 10,-15,60,-30 },{ 10,-15,60,-20 },
+						{ 8,45,10,-15 } ,{ 5,0,0,-5 },{ 0,0,0,0 } }, { { 0,0,2,0,0,90,0 },{ 1,30,7,0,5,90,30 } ,{ 0,60,10,6,10,90,60 },
+						{ 1,30,10,3,5,90,30 },{ 0,0,10,0,0,90,0 },{ 1,-30,10,-3,-5,90,30 },	{ 0,-60,7,0,-10,90,60 } ,{ 1,-30,2,0,-5,90,30 },{ 0,0,2,0,-1,90,0 } },
+						{ { 0,-60,5,-10,0,-90,0,0,0,0 },{ 0,-60,10,-10,0,-90,0,0,-5,45,20 } ,{ 0,-60,60,-10,0,-45,0,0,-10,90,50 },
+						{ 0,-60,60,-10,1,0,0,0,-10,45,20 },{ 0,-60,60,-10,3,0,0,0,-10,0,0 },{ 0,-60,60,-10,6,0,0,0,-10,45,20 },
+						{ 0,-60,10,-10,8,0,0,2.5,-10,90,50 } ,{ 0,-60,0,-10,9,0,0,6,-10,45,20 },{ 0,-60,0,-10,10,0,0,7,-10,0,0 } } };
 
 GLfloat angle = 0.0;   // in degrees 
 GLfloat angle2 = 0.0;  // in degrees 
@@ -27,29 +25,35 @@ void leg(GLfloat LR, GLint num);
 GLuint _textureId; //The id of the texture
 
 const char *modelname = "data/rabbit.obj";
-const char *rabbit_obj = "data/bonecoDeNeve.obj";
+const char *rabbit_obj = "data/rabbit.obj";
 const char *rock_obj = "data/rock3.obj";
 const char *palm_obj = "data/palm.obj";
 const char *bench_obj = "data/bench.obj";
-
+const char *trashcan_obj = "data/park-trashcan.obj";
+const char *parklight_obj = "data/park-light.obj";
 
 
 // RGBA
 GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 0.0 };
 GLfloat light_diffuse[] = { 0.5, 0.5, 0.5, 1.0 };
-GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat light_specular[] = { 0.5, 0.5, 0.5, 1.0 };
 // x , y, z, w
-GLfloat light_position[] = { 0.5, 1.0, 0.0, 1.0 };
-GLfloat lightPos1[] = { -0.5, -0.0, -2.0, 1.0 };
+GLfloat light_position[] = { 5, 3.0, 10.0, 1.0 };
+GLfloat lightPos1[] = { -0.5, 0.0, -2.0, 1.0 };
 
 // rabbit material parameters
-GLfloat mat_amb_diff[] = { 0.643, 0.753, 0.934, 1.0 };
+GLfloat mat_amb_diff[] = { 0.753, 0.703, 0.554, 1.0 };
 GLfloat mat_specular[] = { 0.0, 0.0, 0.0, 1.0 };
-GLfloat shininess[] = { 100.0 };
+GLfloat shininess[] = { 10.0 };
+
+// rock material parameters
+GLfloat mat_amb_diff_r[] = { 0.743, 0.4, 0.2, 1.0 };
+GLfloat mat_specular_r[] = { 0.0, 0.0, 0.0, 1.0 };
+GLfloat shininess_r[] = { 80.0 };
 
 
 //Setting Camera
-double eye[] = { 0.0, 2.0, 20.0 };
+double eye[] = { 0.0, 2.5, 20.0 };
 double center[] = { 0.0, 0.0, 0.0 };
 double up[] = { 0.0, 1.0, 0.0 };
 
@@ -79,6 +83,200 @@ void init(void)
 {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
+}
+
+//void changer()
+//{
+//	ground = "images/snow.bmp";
+//}
+//
+//void changer2()
+//{
+//	std::cout << ground;
+//	ground = "images/rockground.bmp";
+//}
+
+//
+////Initializes 3D rendering
+//const char *ground = "images/grass2.bmp";
+//void screen_menu(int value)
+//{
+//	switch(value){
+//		case '1':
+//			ground = "images/rockground.bmp";
+//			std::cout << ground;
+//			break;
+//	
+//		case '2':
+//			ground = "images/rockground.bmp";
+//			std::cout << ground;
+//			break;
+//
+//		case '3':
+//			ground = "images/snow.bmp";
+//			std::cout << ground;
+//			break;
+//	}
+//	glutPostRedisplay();
+//		//reset();
+//}
+//
+//void attachMenu(){
+//	glutCreateMenu(screen_menu);
+//	glutAddMenuEntry("Grass", '1');
+//	//glutAddMenuEntry("", 0);
+//	glutAddMenuEntry("Rocks", '2');
+//	glutAddMenuEntry("Snow", '3');
+//
+//	glutAttachMenu(GLUT_RIGHT_BUTTON);}
+//
+//void initRendering()
+//{
+//	Image *image = loadBMP(ground);
+//	_textureId = loadTexture(image);
+//	delete image;
+//	// Turn on the power
+//	glEnable(GL_LIGHTING);
+//	// Flip light switch
+//	glEnable(GL_LIGHT0);
+//	glEnable(GL_LIGHT1);
+//	// assign light parameters
+//	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+//	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+//	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+//	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+//	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
+//	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
+//	// Material Properties
+//	GLfloat lightColor1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+//	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
+//	glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
+//	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor1);
+//	glEnable(GL_NORMALIZE);
+//	//Enable smooth shading
+//	glShadeModel(GL_SMOOTH);
+//	// Enable Depth buffer
+//	glEnable(GL_DEPTH_TEST);
+//}
+//
+
+
+void reset() {
+	double e[] = { 0.0,0.0,1.0 };
+	double c[] = { 0.0,0.0,0.0 };
+	double u[] = { 0.0,1.0,0.0 };
+	for (int i = 0; i< 3; i++)
+	{
+		eye[i] = e[i];
+		center[i] = c[i];
+		up[i] = u[i];
+	}
+}
+
+//void screan_menu(int value)
+//{
+//	glutPostRedisplay();
+//	switch(value)
+//	{
+//		case '1':
+//			Image* image = loadBMP("images/grass2.bmp");
+//			_textureId = loadTexture(image);
+//			delete image;
+//			break;
+//	
+//		case '2':
+//	
+//			Image* image = loadBMP("images/rockground.bmp");
+//			_textureId = loadTexture(image);
+//			delete image;
+//			break;
+//		
+//		case '3':
+//			Image* image = loadBMP("images/snow.bmp");
+//			_textureId = loadTexture(image);
+//			delete image;
+//			break;
+//	}
+//}
+
+void screan_menu(int value)
+{
+	if (value == 0) {
+		d = 0;
+	}
+	else if (value == 1) {
+		d = 1;
+	}
+	else if (value == 2) {
+		d = 2;
+	}
+	else if (value == 4) {
+		Image* image = loadBMP("images/grass2.bmp");
+		_textureId = loadTexture(image);
+		delete image;
+	}
+	else if (value == 5)
+	{
+		Image* image = loadBMP("images/rockground.bmp");
+		_textureId = loadTexture(image);
+		delete image;
+	}
+	else if (value == 6)
+	{
+		Image* image = loadBMP("images/snow.bmp");
+		_textureId = loadTexture(image);
+		delete image;
+	}
+	glutPostRedisplay();
+}
+
+void initCarpet(void) {
+	Image* image = loadBMP("images/grass2.bmp");
+	_textureId = loadTexture(image);
+	delete image;
+}
+
+void attachMenu() {
+	glutCreateMenu(screan_menu);
+	glutAddMenuEntry("Jump", 0);
+	glutAddMenuEntry("Dance", 1);
+	glutAddMenuEntry("Move", 2);
+	glutAddMenuEntry("", 3);
+	glutAddMenuEntry("Grass", 4);
+	glutAddMenuEntry("Rockground", 5);
+	glutAddMenuEntry("Snow", 6);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+//void attachMenu() {//	glutCreateMenu(screen_menu);//	glutAddMenuEntry("Jump", '0');//	//glutAddMenuEntry("", 0);//	glutAddMenuEntry("Dance", '1');//	glutAddMenuEntry("Move", '2');//	glutAttachMenu(GLUT_RIGHT_BUTTON);
+//}
+
+
+void initRendering()
+{
+	initCarpet();
+	// Turn on the power
+	glEnable(GL_LIGHTING);
+	// Flip light switch
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	// assign light parameters
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
+	// Material Properties
+	GLfloat lightColor1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor1);
+	// glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glEnable(GL_NORMALIZE);
+	//Enable smooth shading
+	glShadeModel(GL_SMOOTH);
+	// Enable Depth buffer
+	glEnable(GL_DEPTH_TEST);
 }
 
 void drawmodel(char *filename)
@@ -182,15 +380,11 @@ void body() {
 
 void rabbit() {
 
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
-
 	glPushMatrix();    //stack: [TRUNK][I]
-	glTranslatef(12.0, -4.5, 0);
-	glRotatef(0.0, -50.0, 0.0, 1.0);
-	glPushMatrix();    //stack: [UPLEG][TRUNK][I]
-	//glScalef(5,5, 5);
+	glTranslatef(21.0, -4.5, -5);
+	glRotatef(-60.0, 0.0, 1.0, 0.0);
+	glPushMatrix();    
+    //glScalef(5,5, 5);
 	drawmodel((char *)rabbit_obj);
 
 	glPopMatrix();    //stack: [TRUNK][I]
@@ -198,12 +392,13 @@ void rabbit() {
 
 }
 
-void rock() {
+void rock(int x, int y, int z, int s) {
+	
 	glPushMatrix();    //stack: [TRUNK][I]
-	glTranslatef(-10.0, -4.5, 8);
-	glRotatef(0.0, -50.0, 0.0, 1.0);
-	glPushMatrix();    //stack: [UPLEG][TRUNK][I]
-	glScalef(2, 1.7, 1.8);
+	glTranslatef(x, y, z);
+	glRotatef(140.0, 0.0, 1.0, 0.0);
+	glPushMatrix();    
+	glScalef(s, s, s);
 	drawmodel((char *)rock_obj);
 
 	glPopMatrix();    //stack: [TRUNK][I]
@@ -212,89 +407,49 @@ void rock() {
 
 void tree(GLfloat x, GLfloat z) {
 	glPushMatrix();    //stack: [TRUNK][I]
-	glTranslatef(x, 5, z);
-	glRotatef(0.0, -50.0, 0.0, 1.0);
-	glPushMatrix();    //stack: [UPLEG][TRUNK][I]
-	glScalef(10, 10, 10);
+	glTranslatef(x, 25, z);
+	glRotatef(0.0, 0.0, 1.0, 0.0);
+	glPushMatrix();    
+	glScalef(30, 30, 30);
 	drawmodel((char *)palm_obj);
 
 	glPopMatrix();    //stack: [TRUNK][I]
 	glPopMatrix();
 }
 
-//void changer()
-//{
-//	ground = "images/snow.bmp";
-//}
-//
-//void changer2()
-//{
-//	std::cout << ground;
-//	ground = "images/rockground.bmp";
-//}
-
-
-//Initializes 3D rendering
-const char *ground = "images/grass2.bmp";
-void screen_menu(int value)
+void bench(GLfloat x, GLfloat z, int r)
 {
-	switch(value){
-		case '1':
-			ground = "images/rockground.bmp";
-			std::cout << ground;
-			break;
-	
-		case '2':
-			ground = "images/rockground.bmp";
-			std::cout << ground;
-			break;
+	glPushMatrix();    //stack: [TRUNK][I]
+	glTranslatef(x, -3.5, z);
+	glRotatef(r, 0.0, 1.0, 0.0);
+	glScalef(6, 6, 5);
+	drawmodel((char *)bench_obj);
 
-		case '3':
-			ground = "images/snow.bmp";
-			std::cout << ground;
-			break;
-	}
-	glutPostRedisplay();
-		//reset();
+	glPopMatrix();
 }
 
-void attachMenu(){
-	glutCreateMenu(screen_menu);
-	glutAddMenuEntry("Grass", '1');
-	//glutAddMenuEntry("", 0);
-	glutAddMenuEntry("Rocks", '2');
-	glutAddMenuEntry("Snow", '3');
+void trashcan() {
+	glPushMatrix();    //stack: [TRUNK][I]
+	glTranslatef(-23.0, -4.5, -14);
+	glRotatef(-60.0, 0.0, 1.0, 0.0);
+	glPushMatrix();
+	//glScalef(5,5, 5);
+	drawmodel((char *)trashcan_obj);
 
-	glutAttachMenu(GLUT_RIGHT_BUTTON);}
-
-void initRendering()
-{
-	Image *image = loadBMP(ground);
-	_textureId = loadTexture(image);
-	delete image;
-	// Turn on the power
-	glEnable(GL_LIGHTING);
-	// Flip light switch
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
-	// assign light parameters
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-	glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
-	// Material Properties
-	GLfloat lightColor1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
-	glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor1);
-	glEnable(GL_NORMALIZE);
-	//Enable smooth shading
-	glShadeModel(GL_SMOOTH);
-	// Enable Depth buffer
-	glEnable(GL_DEPTH_TEST);
+	glPopMatrix();    //stack: [TRUNK][I]
+	glPopMatrix();
 }
+
+void parklight() {
+	glPushMatrix();    //stack: [TRUNK][I]
+	glTranslatef(-26.0, -4.5, -14);
+	glRotatef(0.0, 0.0, 1.0, 0.0);
+	glScalef(2, 1, 2);
+	drawmodel((char *)parklight_obj);
+
+	glPopMatrix();
+}
+
 
 void display(void)
 {
@@ -325,32 +480,36 @@ void display(void)
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 
-	body();
+	glPushMatrix();	glTranslatef(wside, jump, wfront);	glRotatef(hrotate, 0, 1, 0);	body();	glPopMatrix();
+
 	rabbit();
-	rock();
+
+	glPushMatrix();	glTranslatef(0, 0, trock);	rock(-10, -4.5, 8, 1);	glPopMatrix();
+
+	//rock(15, -1, -15, 10);
+	bench(-10, -14, 180);
+	bench(-25, -1, -90);
+	bench(-25, 15, -90);
+	
 	//tree(-17, 5);
 	//tree(-13, 4);
-	//tree(-7, 19);
+	tree(-7, -25);
+	trashcan();
+	//parklight();
 
 	glPopMatrix();
 	glutSwapBuffers();
 }
 
-void setFrame(int frameIndex) {
-	hip_x[0] = frames[frameIndex][0];
-	hip_x[1] = frames[frameIndex][1];
-	shoulder_y[0] = frames[frameIndex][2];
-}
+void setFrame(int animation, int frameIndex) {	jump = frames[animation][frameIndex][0];	shoulder_z[0] = frames[animation][frameIndex][1];	shoulder_z[1] = frames[animation][frameIndex][1];	knee[0] = frames[animation][frameIndex][2];	knee[1] = frames[animation][frameIndex][2];	hip_y[0] = frames[animation][frameIndex][3];	hip_y[1] = frames[animation][frameIndex][3];	wfront = frames[animation][frameIndex][4];	hrotate = frames[animation][frameIndex][5];	hip_z[0] = frames[animation][frameIndex][6];	hip_z[1] = -1 * frames[animation][frameIndex][6];	trock = frames[animation][frameIndex][7];	wside = frames[animation][frameIndex][8];	hip_x[0] = frames[animation][frameIndex][9];	hip_x[1] = -frames[animation][frameIndex][9];	}
 
 void timer(int value) {
-	f = f % 5;
-	setFrame(f);
+	f = f % 9;
+	setFrame(d, f);
 	f++;
 	glutPostRedisplay();
-	glutTimerFunc(190, timer, 0);
+	glutTimerFunc(190, timer, d);
 }
-
-
 
 void rotatePoint(double a[], double theta, double p[])
 {
@@ -381,8 +540,6 @@ void rotatePoint(double a[], double theta, double p[])
 	p[2] = temp[2];
 }
 
-
-
 void crossProduct(double a[], double b[], double c[])
 {
 	c[0] = a[1] * b[2] - a[2] * b[1];
@@ -399,8 +556,6 @@ void normalize(double a[])
 	a[1] /= norm;
 	a[2] /= norm;
 }
-
-
 
 void rotateHorizontal(int flag) {
 	rotatePoint(up, flag * 3.14 / 8, eye);
@@ -454,7 +609,7 @@ void reshape(int w, int h)
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(85.0, (GLfloat)w / (GLfloat)h, 1.0, 50.0);
+	gluPerspective(85.0, (GLfloat)w / (GLfloat)h, 1.0, 70.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(0.0, 0.0, -5.0);
@@ -506,7 +661,7 @@ int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(2000, 2000);
+	glutInitWindowSize(1500, 1500);
 	glutInitWindowPosition(10, 10);
 	glutCreateWindow(argv[0]);
 	//changer2();
@@ -515,8 +670,8 @@ int main(int argc, char** argv)
 	attachMenu();
 	init();
 	initRendering();
-	//glutTimerFunc(190, timer, 0);
 	glutMouseFunc(mouse);
+	glutTimerFunc(190, timer, d);
 	glutMotionFunc(motion);
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
