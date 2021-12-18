@@ -46,10 +46,10 @@
 
         In this animation the robotic body interacts with the small rock. The man moves toward this rock and kicks it far from his way.         
 <p float="left">
-    <img src="samples/happy.PNG" width="300" height="250"/>
-    <img src="samples/dancing.PNG" width="300" height="250"/>
-    <img src="samples/captainmaged.PNG" width="300" height="250"/>
-    <img src="samples/shot.PNG" width="300" height="250"/>
+    <img src="samples/happy.PNG" width="400" height="300"/>
+    <img src="samples/dancing.PNG" width="400" height="300"/>
+    <img src="samples/captainmaged.PNG" width="400" height="300"/>
+    <img src="samples/shot.PNG" width="400" height="300"/>
 </P>
 
 ## Problems Faced
