@@ -1,4 +1,4 @@
-# Assignment 3 Report
+# OpenGL Animation
 ## Project Summary:
  In this project we used the robotic body from the previous assignment and added three additional features:
  - Surrounding Environment:
