@@ -52,17 +52,3 @@
     <img src="samples/shot.PNG" width="300" height="250"/>
 </P>
 
-## Problems Faced
-We faced different problems in the following:
-
- - Animatiom:
-
-    It was difficult to construct an animation by using just numbers to adjust a lot of angles and positions, We overcame this problem by using try and error technique.
-
- - Coding:
-
-    There was a lot of logic and syntax errors that appeared mainly because the code was so long. We solved this problem by using the IDE features.
-
-## Contributions
-
-We took some code blocks from tutorial 5 materials.
